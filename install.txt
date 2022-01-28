@@ -1,0 +1,26 @@
+echo -e "\e[1;91m   ▄█    █▄    ▄████████    ▄████████    ▄████████  Channel : @BOTATE \n  ███    ███   ███    ███   ███    ███   ███    ███ \n  ███    ███   ███    █▀    ███    █▀    ███    ███ \n  ███    ███  ▄███▄▄▄      ▄███▄▄▄      ▄███▄▄▄▄██▀  Bot : @VeerCliBot\n  ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   \n  ███    ███   ███    █▄    ███    █▄  ▀███████████ Dev : @Sa3ed\n  ███    ███   ███    ███   ███    ███   ███    ███ \n   ▀██████▀    ██████████   ██████████   ███    ███  By Source Veer\e[0m"
+echo -n "Downloading python3.8.." 
+sudo apt-get update -y &>/dev/null
+sudo add-apt-repository ppa:deadsnakes/ppa -y &>/dev/null
+sudo apt-get update -y &>/dev/null
+sudo apt install python3.8 -y -y &>/dev/null
+sudo apt install python3-pip -y &>/dev/null
+sudo python3.8 -m pip install --upgrade pip &>/dev/null
+echo -e "\rDone download python3.8"
+echo -n "Downloading libraries.." 
+sudo apt-get update -y &>/dev/null
+sudo python3.8 -m pip install -U Pyrogram &>/dev/null
+sudo python3.8 -m pip install -U tgcrypto &>/dev/null
+sudo python3.8 -m pip install redis &>/dev/null
+sudo apt-get install redis-server -y &>/dev/null
+sudo systemctl enable redis-server.service -y &>/dev/null
+echo -e "\rDone download libraries"
+echo -n "Downloading requests.."
+sudo pip3 install requests &>/dev/null
+echo -e "\rDone download requests"
+echo -n "Downloading pm2.." 
+curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - &>/dev/null; sudo apt-get update &>/dev/null; sudo apt install nodejs -y &>/dev/null; sudo npm install -g pm2 &>/dev/null
+echo -e "\rDone download pm2"
+echo -n "Downloading Veer Source.." 
+git clone https://github.com/VeerCli/VeerV2.git &>/dev/null
+echo -e "\rDone Veer Source"
