@@ -72,7 +72,9 @@ def Ckuser(message):
   userID = message.from_user.id
   chatID = message.chat.id
   response = requests.get('https://api.telegram.org/bot{}/getchatmember?chat_id=@{}&user_id={}'.format(TOKEN,BOTATE,userID)).json()
-  if response["result"]["status"] == "left":
+  if response["ok"] == False:
+    return True
+  if response["result"] != None and response["result"]["status"] == "left":
     kb = InlineKeyboardMarkup([[InlineKeyboardButton("اضغط للاشتراك ⏺", url="t.me/"+BOTATE)] ])
     Bot("sendMessage",{"chat_id":chatID,"text":'عذراً يجب عليك الاشتراك في \n<a href="t.me/'+BOTATE+'">قناة البوت</a>\nليمكنك استخدام البوت بشكل كامل',"reply_to_message_id":message.message_id,"parse_mode":"html","disable_web_page_preview":True,"reply_markup":kb})
     return False
