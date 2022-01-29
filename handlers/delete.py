@@ -236,3 +236,7 @@ def delete(client, message,redis):
 ⏺꒐ تم طرده لتجاوز عدد الرسائل المحدده {} في الوقت المحدد {}""".format(BY,Max_msg,Time_ck),"parse_mode":"html"})
 
     redis.setex("{}Nbot:{}:{}:flood".format(BOT_ID,chatID,userID), Time_ck, User_msg+1)
+
+  if re.findall("[Hh][Tt][Tt][Pp][Ss]:/|[Hh][Tt][Tt][Pp]://|.[Ii][Rr]|.[Cc][Oo][Mm]|.[Oo][Rr][Gg]|.[Ii][Nn][Ff][Oo]|[Ww][Ww][Ww]|.[Tt][Kk]|.[Mm][Ee]", text) or re.findall('@', text) or re.findall('#', text) or re.findall("[a-zA-Z0-9$@$!%*?&#^-_. +]+", text) or message.via_bot or message.reply_markup or message.sticker or message.animation or message.audio or message.voice or message.video or message.document or message.photo or message.contact or message.forward_date or message.video_note:
+    if redis.sismember("{}Nbot:Lall".format(BOT_ID),chatID):#20
+      Bot("deleteMessage",{"chat_id":chatID,"message_id":message.message_id})
