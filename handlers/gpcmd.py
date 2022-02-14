@@ -539,7 +539,7 @@ def gpcmd(client, message,redis):
 🔽꒐ ويمكنك ايضاً اضافه html
 
 <b>bold</b>
-*bold*
+**bold**
 
 <i>italic</i>
 __italic__
