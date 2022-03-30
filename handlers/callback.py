@@ -174,7 +174,8 @@ def updateCallback(client, callback_query,redis):
       f = open("./files/"+File,"w+")
       f.write(out)
       f.close()
-      Bot("editMessageText",{"chat_id":chatID,"text":r.Dua.format(File),"message_id":message_id,"parse_mode":"html","disable_web_page_preview":True})
+      reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("الملفات", callback_data=json.dumps(["sf","",userID]))]])
+      Bot("editMessageText",{"chat_id":chatID,"text":r.Dua.format(File),"message_id":message_id,"parse_mode":"html","disable_web_page_preview":True,"reply_markup":reply_markup})
 
     if date[0] == "au":
       File = date[1]
@@ -193,6 +194,20 @@ def updateCallback(client, callback_query,redis):
         array.append([InlineKeyboardButton(f+" "+s,callback_data=json.dumps(["au",f,userID]))])
       kb = InlineKeyboardMarkup(array)
       Bot("editMessageReplyMarkup",{"chat_id":chatID,"message_id":message_id,"disable_web_page_preview":True,"reply_markup":kb})
+
+    if date[0] == "sf":
+
+      onlyfiles = [f for f in listdir("files") if isfile(join("files", f))]
+      filesR = redis.smembers("{}Nbot:botfiles".format(BOT_ID))
+      array = []
+      for f in onlyfiles:
+        if f in filesR:
+          s = r.true
+        else:
+          s = r.false
+        array.append([InlineKeyboardButton(f+" "+s,callback_data=json.dumps(["au",f,userID]))])
+      kb = InlineKeyboardMarkup(array)
+      Bot("editMessageText",{"chat_id":chatID,"text":r.Files,"message_id":message_id,"parse_mode":"html","disable_web_page_preview":True,"reply_markup":kb})
 
     if date[0] == "twostepset":
       get = date[1] 
@@ -629,12 +644,7 @@ def updateCallback(client, callback_query,redis):
       Bot("editMessageText",{"chat_id":chatID,"text":r.DoneDelList,"message_id":message_id,"disable_web_page_preview":True})
 
     if date[0] == "delListrestricteds":
-      arrays = redis.smembers("{}Nbot:{}:restricteds".format(BOT_ID,chatID))
-      for user in arrays:
-        GetGprank = GPranks(user,chatID)
-        if GetGprank == "restricted":
-          Bot("restrictChatMember",{"chat_id": chatID,"user_id": user,"can_send_messages": 1,"can_send_media_messages": 1,"can_send_other_messages": 1,"can_send_polls": 1,"can_change_info": 1,"can_add_web_page_previews": 1,"can_pin_messages": 1,})
-        redis.srem("{}Nbot:{}:restricteds".format(BOT_ID,chatID),user)
+      arrays = redis.delete("{}Nbot:{}:restricteds".format(BOT_ID,chatID))
       Bot("editMessageText",{"chat_id":chatID,"text":r.DoneDelList,"message_id":message_id,"disable_web_page_preview":True})
 
     if date[0] == "LandU":
