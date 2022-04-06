@@ -264,7 +264,11 @@ setphoto = "^وضع صوره|^وضع صورة$"
 
 mymsgs = "رسائلي"
 
-myedits = "سحكاتي"
+delmymsgs = "مسح رسائلي"
+
+myedits = "^تعديلاتي$|^سحكاتي$"
+
+delmyedits = "^مسح تعديلاتي$|^مسح سحكاتي$"
 
 myaddcontact = "جهاتي"
 
