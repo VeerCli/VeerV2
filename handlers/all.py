@@ -147,9 +147,6 @@ def allGP(client, message,redis):
     if text == c.mymsgs:
       get = redis.hget("{}Nbot:{}:msgs".format(BOT_ID,chatID),userID)
       Bot("sendMessage",{"chat_id":chatID,"text":r.yourmsgs.format((get or 0)),"reply_to_message_id":message.message_id,"parse_mode":"html"})
-    if text == c.delmymsgs:
-      redis.delete("{}Nbot:{}:msgs".format(BOT_ID,chatID),userID)
-      Bot("sendMessage",{"chat_id":chatID,"text":r.yourdelmsgs,"reply_to_message_id":message.message_id,"parse_mode":"html"})
     if text == c.link and not redis.sismember("{}Nbot:showlink".format(BOT_ID),chatID):
       get = (redis.hget("{}Nbot:links".format(BOT_ID),chatID) or GetLink(chatID) or "none")
       Bot("sendMessage",{"chat_id":chatID,"text":r.showGPlk.format(get),"reply_to_message_id":message.message_id,"parse_mode":"html","disable_web_page_preview":True})
@@ -157,10 +154,6 @@ def allGP(client, message,redis):
     if re.search(c.myedits, text):
       get = redis.hget("{}Nbot:{}:edits".format(BOT_ID,chatID),userID)
       Bot("sendMessage",{"chat_id":chatID,"text":r.youredits.format((get or 0)),"reply_to_message_id":message.message_id,"parse_mode":"html"})
-
-    if re.search(c.delmyedits, text):
-      redis.delete("{}Nbot:{}:edits".format(BOT_ID,chatID),userID)
-      Bot("sendMessage",{"chat_id":chatID,"text":r.yourdeledits,"reply_to_message_id":message.message_id,"parse_mode":"html"})
 
     if text == c.myaddcontact:
       get = redis.hget("{}Nbot:{}:addcontact".format(BOT_ID,chatID),userID)
