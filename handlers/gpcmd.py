@@ -791,11 +791,15 @@ __italic__
           i = 1
           for u in tagall:
             if u.user.username:
-              listTag = listTag+"\n"+str(i)+" - [@{}]".format(u.user.username)
+              listTag = listTag+"\n"+str(i)+" l- [@{}]".format(u.user.username)
             else:
-              listTag = listTag+"\n"+str(i)+" - [{}](tg://user?id={})".format(u.user.first_name,u.user.id)
+              listTag = listTag+"\n"+str(i)+" l- [{}](tg://user?id={})".format(u.user.first_name,u.user.id)
             i += 1 
-          sendM("NO",listTag,message)
+            if len(listTag) > 3800:
+              Bot("sendMessage",{"chat_id":chatID,"text":listTag,"reply_to_message_id":message.message_id,"parse_mode":"markdown","disable_web_page_preview":True})
+              listTag = ""
+              time.sleep(0.3)
+          Bot("sendMessage",{"chat_id":chatID,"text":listTag+"\n✅ l- انتها التاك للكل 👏","reply_to_message_id":message.message_id,"parse_mode":"markdown","disable_web_page_preview":True})
           
       # if re.search(c.Chlang, text):
       #   Bot("sendMessage",{"chat_id":chatID,"text":r.Chlang,"reply_to_message_id":message.message_id,"parse_mode":"html","reply_markup":Clang(client, message,redis,r)})
