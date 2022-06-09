@@ -26,7 +26,7 @@ def allGP(client, message,redis):
   r = importlib.import_module("lang.arreply")
   redis.hincrby("{}Nbot:{}:msgs".format(BOT_ID,chatID),userID)
   if text :
-    if text == "منو ضافني" or text == "مين ضافني":
+    if text == "منو ضافني" or text == "مين ضافني" or text == "مين ضايفني":
       get = redis.hget("{}Nbot:MowAddMe:{}".format(BOT_ID,chatID),userID)
       if get:
         Bot("sendMessage",{"chat_id":chatID,"text":f"تم اضافتك بواسطة ⏺: {get}","reply_to_message_id":message.message_id})
