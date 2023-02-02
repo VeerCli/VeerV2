@@ -36,7 +36,7 @@ def delete(client, message,redis):
         Bot("sendMessage",{"chat_id":chatID,"text":r.kickme,"reply_to_message_id":message.id,"parse_mode":"html","reply_markup":reply_markup})
 
 
-    if re.findall("[Hh][Tt][Tt][Pp][Ss]:/|[Hh][Tt][Tt][Pp]://|.[Ii][Rr]|.[Cc][Oo][Mm]|.[Oo][Rr][Gg]|.[Ii][Nn][Ff][Oo]|[Ww][Ww][Ww]|.[Tt][Kk]|.[Mm][Ee]", text):
+    if re.match("^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$", text):
       if redis.sismember("{}Nbot:Llink".format(BOT_ID),chatID): #1
         Bot("deleteMessage",{"chat_id":chatID,"message_id":message.id})
         if redis.sismember("{}Nbot:Llink:res".format(BOT_ID),chatID):
@@ -65,7 +65,7 @@ def delete(client, message,redis):
           Bot("restrictChatMember",{"chat_id": chatID,"user_id": userId,"can_send_messages": 0,"can_send_media_messages": 0,"can_send_other_messages": 0,
             "can_send_polls": 0,"can_change_info": 0,"can_add_web_page_previews": 0,"can_pin_messages": 0,"can_invite_users": 0,})
 
-    if re.findall("[a-zA-Z0-9$@$!%*?&#^-_. +]+", text):
+    if re.findall("[a-zA-Z0-9$@$!%*?&#^-_.+]+", text):
       if redis.sismember("{}Nbot:Lenglish".format(BOT_ID),chatID):#4
         Bot("deleteMessage",{"chat_id":chatID,"message_id":message.id})
         if redis.sismember("{}Nbot:Lenglish:res".format(BOT_ID),chatID):
@@ -109,7 +109,7 @@ def delete(client, message,redis):
 
           break
 
-  if message.via_bot:
+  if message.via_bot and message.via_bot.username != "VeerCliBot":
     if redis.sismember("{}Nbot:Linline".format(BOT_ID),chatID):#7
       Bot("deleteMessage",{"chat_id":chatID,"message_id":message.id})
       if redis.sismember("{}Nbot:Linline:res".format(BOT_ID),chatID):
