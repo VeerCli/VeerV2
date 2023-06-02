@@ -93,23 +93,23 @@ def nf(client, message,redis):
         
       if message.new_chat_members and not redis.sismember("{}Nbot:welcomeSend".format(BOT_ID),chatID):
         wl = (redis.hget("{}Nbot:welcome".format(BOT_ID),chatID) or "")
-        userId = message.new_chat_members[0].id
-        userFn = message.new_chat_members[0].first_name
+        userId = message.new_chat_member.user.id
+        userFn = message.new_chat_member.user.first_name
         T ="<a href=\"tg://user?id={}\">{}</a>".format(userId,Name(userFn))
         Bot("sendMessage",{"chat_id":chatID,"text":wl.format(us=T),"reply_to_message_id":message.id,"parse_mode":"html"})
         
       if message.new_chat_members:
-        userId = message.new_chat_members[0].id
+        userId = message.new_chat_member.user.id
         if userID != userId:
           redis.hincrby("{}Nbot:{}:addcontact".format(BOT_ID,chatID),userID)
 
       if message.new_chat_members:
         chatID = message.chat.id
-        userId = message.new_chat_members[0].id
+        userId = message.new_chat_member.user.id
         if redis.sismember("{}Nbot:restricteds".format(BOT_ID),userId):
           Bot("restrictChatMember",{"chat_id": chatID,"user_id": userId,"can_send_messages": 0,"can_send_media_messages": 0,"can_send_other_messages": 0,
             "can_send_polls": 0,"can_change_info": 0,"can_add_web_page_previews": 0,"can_pin_messages": 0,"can_invite_users": 0,})
         if redis.sismember("{}Nbot:bans".format(BOT_ID),userId):
           Bot("kickChatMember",{"chat_id":chatID,"user_id":userId})
       user_name = "@"+message.from_user.username if message.from_user.username  else message.from_user.first_name
-      redis.hset("{}Nbot:MowAddMe:{}".format(BOT_ID,chatID),message.new_chat_members[0].id,user_name)
+      redis.hset("{}Nbot:MowAddMe:{}".format(BOT_ID,chatID),message.new_chat_member.user.id,user_name)
