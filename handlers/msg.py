@@ -36,7 +36,7 @@ def updateHandlers(client, message,redis):
 		group = redis.sismember("{}Nbot:groups".format(BOT_ID),chatID)
 		text = message.text
 		title = message.chat.title
-		if text and group is False:
+		if text and group == False:
 			if (rank is "sudo" or rank is "sudos" or rank is "asudo") or (redis.get("{}Nbot:autoaddbot".format(BOT_ID)) and GPranks(userID,chatID) == "creator"):
 				if text == c.add:
 					if redis.get("{}Nbot:autoaddbotN".format(BOT_ID)):
@@ -81,7 +81,7 @@ def updateHandlers(client, message,redis):
 				if text == c.disabl  and Ckuser(message):
 					Bot("sendMessage",{"chat_id":chatID,"text":r.disabled.format(title),"reply_to_message_id":message.id,"parse_mode":"markdown"})
 
-		if text and group is True:
+		if text and group == True:
 			if (rank is "sudo" or rank is "sudos" or rank is "asudo") or (redis.get("{}Nbot:autoaddbot".format(BOT_ID)) and GPranks(userID,chatID) == "creator"):
 				if text == c.add  and Ckuser(message):
 					Bot("sendMessage",{"chat_id":chatID,"text":r.doneadded.format(title),"reply_to_message_id":message.id,"parse_mode":"markdown"})
@@ -92,12 +92,12 @@ def updateHandlers(client, message,redis):
 					redis.hset("{}Nbot:disabledgroupsTIME".format(BOT_ID),chatID,str(NextDay_Date))
 					kb = InlineKeyboardMarkup([[InlineKeyboardButton(r.MoreInfo, url="t.me/"+BOTATE)]])
 					Bot("sendMessage",{"chat_id":chatID,"text":r.disabl.format(title),"reply_to_message_id":message.id,"parse_mode":"markdown","reply_markup":kb})
-		if  group is True:
+		if  group == True:
 			t = threading.Thread(target=allGP,args=(client, message,redis))
 			t.daemon = True
 			t.start()
-
-		if text and group is True:
+		
+		if text and group == True:
 			if redis.sismember("{}Nbot:publicOrders".format(BOT_ID),chatID):
 				x = redis.smembers("{}Nbot:{}:TXPoeders".format(BOT_ID,chatID))
 				for x in x:
@@ -118,26 +118,26 @@ def updateHandlers(client, message,redis):
 					print(e)
 			message.text = text
 
-		if (rank is "sudo" or rank is "sudos" or rank is "asudo") and group is True:
+		if (rank is "sudo" or rank is "sudos" or rank is "asudo") and group == True:
 			t = threading.Thread(target=sudo,args=(client, message,redis))
 			t.daemon = True
 			t.start()
 
-		if text and (rank is "sudo" or rank is "asudo" or rank is "sudos" or rank is "malk" or rank is "acreator" or rank is "creator" or rank is "owner") and group is True:
+		if text and (rank is "sudo" or rank is "asudo" or rank is "sudos" or rank is "malk" or rank is "acreator" or rank is "creator" or rank is "owner") and group == True:
 			t = threading.Thread(target=ranks,args=(client, message,redis))
 			t.daemon = True
 			t.start()
-		if text and (rank is "sudo" or rank is "asudo" or rank is "sudos"  or rank is "malk" or rank is "acreator" or rank is "creator" or rank is "owner" or rank is "admin") and group is True and re.search(c.startlock,text):
+		if text and (rank is "sudo" or rank is "asudo" or rank is "sudos"  or rank is "malk" or rank is "acreator" or rank is "creator" or rank is "owner" or rank is "admin") and group == True and re.search(c.startlock,text):
 			if Ckuser(message):
 				t = threading.Thread(target=locks,args=(client, message,redis))
 				t.daemon = True
 				t.start()
-		if (rank is False or rank is 0) and group is True:
+		if (rank is False or rank is 0) and group == True:
 			t = threading.Thread(target=delete,args=(client, message,redis))
 			t.daemon = True
 			t.start()
 
-		if (rank is "sudo" or rank is "asudo" or rank is "sudos"  or rank is "malk" or rank is "acreator" or rank is "creator" or rank is "owner" or rank is "admin") and group is True:
+		if (rank is "sudo" or rank is "asudo" or rank is "sudos"  or rank is "malk" or rank is "acreator" or rank is "creator" or rank is "owner" or rank is "admin") and group == True:
 			t = threading.Thread(target=gpcmd,args=(client, message,redis))
 			t.daemon = True
 			t.start()
@@ -194,7 +194,7 @@ def updateHandlers(client, message,redis):
 				TY = split[3]
 				group = redis.sismember("{}Nbot:groups".format(BOT_ID),chatId)
 				rank = isrank(redis,userId,chatId)
-				if (rank is not False or rank is not  0 or rank != "vip" or rank != "admin") and group is True:
+				if (rank is not False or rank is not  0 or rank != "vip" or rank != "admin") and group == True:
 					li = redis.hkeys("{}Nbot:{}:{}".format(BOT_ID,chatId,TY))
 					if li:
 						i = 1
@@ -215,7 +215,7 @@ def updateHandlers(client, message,redis):
 				TY = split[3]
 				group = redis.sismember("{}Nbot:groups".format(BOT_ID),chatId)
 				rank = isrank(redis,userId,chatId)
-				if (rank is not False or rank is not  0 or rank != "vip") and group is True:
+				if (rank is not False or rank is not  0 or rank != "vip") and group == True:
 					redis.hset("{}Nbot:{}:TXreplys".format(BOT_ID,chatID),tx,text)
 					li = redis.smembers("{}Nbot:{}:{}".format(BOT_ID,chatId,TY))
 					if li:

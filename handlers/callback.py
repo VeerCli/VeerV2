@@ -135,7 +135,7 @@ def updateCallback(client, callback_query,redis):
     redis.delete("{}Nbot:{}:floodClick".format(BOT_ID,userID))
   if chatID == userID:
     group = True
-  if group is True and int(date[2]) == userID and not redis.get("{}Nbot:floodUsers:{}".format(BOT_ID,userID)):
+  if group == True and int(date[2]) == userID and not redis.get("{}Nbot:floodUsers:{}".format(BOT_ID,userID)):
     if date[0] == "delcheck":
         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(r.notcertain, callback_data=json.dumps(["kickcheck","",userID])),InlineKeyboardButton(r.certain, callback_data=json.dumps(["certain","",userID]))]])
         random.shuffle(reply_markup.inline_keyboard[0])
