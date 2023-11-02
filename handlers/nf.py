@@ -48,7 +48,7 @@ def nf(client, message,redis):
 
     
     if message.new_chat_members:
-      if (rank is False or rank is 0) and GPranks(userID,chatID) == "member" and re.search("is_bot=True",str(message.new_chat_members)):
+      if (rank == False or rank == 0) and GPranks(userID,chatID) == "member" and re.search("is_bot=True",str(message.new_chat_members)):
         if redis.sismember("{}Nbot:Lbots".format(BOT_ID),chatID):
           for mb in message.new_chat_members:
             first_name = mb.first_name

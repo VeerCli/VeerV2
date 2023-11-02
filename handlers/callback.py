@@ -67,7 +67,7 @@ def updateCallback(client, callback_query,redis):
 
   if date[0] == "Cordertow":
     rank = isrank(redis,userID,chatID)
-    if (rank is "sudo" or rank is "asudo" or rank is "sudos" or rank is "malk" or rank is "acreator" or rank is "creator" or rank is "owner"):
+    if (rank == "sudo" or rank == "asudo" or rank == "sudos" or rank == "malk" or rank == "acreator" or rank == "creator" or rank == "owner"):
       if redis.sismember("{}Nbot:{}:bans".format(BOT_ID,chatID),date[1]):
         GetGprank = GPranks(date[1],chatID)
         if GetGprank == "kicked":

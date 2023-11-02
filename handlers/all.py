@@ -65,11 +65,11 @@ def allGP(client, message,redis):
       Botuser = client.get_me().username
       Bot("sendMessage",{"chat_id":chatID,"text":r.dellink,"disable_web_page_preview":True,"reply_to_message_id":message.id,"parse_mode":"markdown","reply_markup":kb})
 
-    if re.search(c.ShowO,text) and (rank is not False or rank is not  0 or rank != "vip"):
+    if re.search(c.ShowO,text) and (rank != False or rank !=  0 or rank != "vip"):
       reply_markup = getOR(rank,r,userID)
       Bot("sendMessage",{"chat_id":chatID,"text":r.Showall,"reply_to_message_id":message.id,"parse_mode":"html","disable_web_page_preview":True,"reply_markup":reply_markup})
 
-    if text == "عدد الكروب" and (rank is not False or rank is not  0 ):
+    if text == "عدد الكروب" and (rank != False or rank !=  0 ):
       from pyrogram.raw.functions.channels import GetFullChannel
       chat = client.resolve_peer(chatID)
       full_chat = client.invoke(GetFullChannel(channel=chat)).full_chat
